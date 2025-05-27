@@ -37,8 +37,6 @@ jobs:
 
     build:
         uses: ./.github/workflows/resuable-build-workflow.yml
-        with:
-            node-version: 24
 
     deploy:
         runs-on: ubuntu-latest
