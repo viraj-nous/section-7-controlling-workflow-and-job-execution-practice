@@ -1,4 +1,4 @@
-name: Reusable Build Workflow
+name: Reusable Build Workflow Demo
 on: workflow_dispatch
 jobs:
     lint:
