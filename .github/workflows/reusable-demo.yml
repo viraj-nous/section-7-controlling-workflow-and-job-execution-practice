@@ -43,7 +43,7 @@ jobs:
     
   deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [lint, test, build]
     steps:
       - name: Deploy Application
         run: echo "Deploying application... ${{needs.build.outputs.build-status}}"
