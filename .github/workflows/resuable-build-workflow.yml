@@ -1,0 +1,36 @@
+name: Reusable Build Workflow
+on: 
+    workflow_call:
+        inputs:
+            node-version:
+                required: false
+                type: number
+                description: Node.js version to use
+                default: 22
+        outputs:
+            build-status:
+                description: Status of the build
+                value: ${{ jobs.build.outputs.build-status }}
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        outputs:
+            build-status: ${{ steps.build.outputs.status }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js ${{ inputs.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                node-version: ${{ inputs.node-version }}
+            
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build the project
+              run: npm run build
+
+            - name: Set build status
+              id: build
+              run: echo "status=${{ job.status }}" >> $GITHUB_OUTPUT
